@@ -1,19 +1,18 @@
 package com.answern.logback.config.aop;
 
 import com.answern.logback.base.BaseUtil;
+import com.answern.logback.server.CMQServer;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 
 /**
@@ -29,6 +28,8 @@ import java.util.Set;
 public class AopMethodServer {
 
     private  Logger logger = LoggerFactory.getLogger(AopMethodServer.class);
+    @Autowired
+    private CMQServer cmqServer;
 
     /**
      * Method执行方法之前调用
@@ -195,9 +196,13 @@ public class AopMethodServer {
         if(isPrint){
             logger.info(info.toString());
         }
+        //将日志信息发送到CMQ
+        cmqServer.sendMessageQueue(info.toString());
 
 
     }
+
+
 
     /**
      * 获取方法的中文备注____用于记录用户的操作日志描述
