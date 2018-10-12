@@ -20,10 +20,11 @@ public @interface ControllerLog {
      * 系统名称
      * @return
      */
-    String sysName();
+    String logInfo();
+
     /**
-     * 系统名称
+     * 是否本系统打印，默认为打印
      * @return
      */
-    String logInfo();
+    boolean isTrue() default true;
 }

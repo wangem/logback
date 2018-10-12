@@ -1,6 +1,7 @@
 package com.answern.logback.config.aop;
 
 import com.answern.logback.base.BaseUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
@@ -40,12 +41,16 @@ public class AopAspect {
 
     @Around("@annotation(test)")
     public Object aroundMethodLog(ProceedingJoinPoint point, MethodLog test) throws Throwable {
-        id = UUID.randomUUID().toString();
+
+        if (!StringUtils.isNotEmpty(id)){
+            id = UUID.randomUUID().toString();
+        }
+        String cid =UUID.randomUUID().toString();
         // 调用前日志处理
-        aopMethodServer.aopMethodBefore(id, point, test);
+        aopMethodServer.aopMethodBefore(id,cid,point, test);
         Object aThis = point.proceed();
         // 调用后日志处理
-        aopMethodServer.aopMethodAfter(id, point, test);
+        aopMethodServer.aopMethodAfter(id,cid, point, test);
         return aThis;
     }
 
@@ -54,6 +59,7 @@ public class AopAspect {
         ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpServletRequest request = requestAttributes.getRequest();
         id = UUID.randomUUID().toString();
+
         // 调用前日志处理
         aopMethodServer.aopControllerBefore(id, point, test, request);
         Object aThis = point.proceed();

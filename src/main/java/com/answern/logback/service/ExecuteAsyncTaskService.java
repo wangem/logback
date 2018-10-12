@@ -1,6 +1,9 @@
 package com.answern.logback.service;
 
+import com.answern.logback.config.aop.AopMethodServer;
 import com.answern.logback.config.aop.MethodLog;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Service;
@@ -18,9 +21,10 @@ import java.util.concurrent.Future;
 @Service
 public class ExecuteAsyncTaskService {
 
+    private Logger logger = LoggerFactory.getLogger(ExecuteAsyncTaskService.class);
 
     @Async("asyncServiceExecutor")
-    @MethodLog(sysName = "log",logInfo = "is test")
+    @MethodLog(logInfo = "is test")
     public  void executeAsyncTask(Integer n){
         try {
             Thread.sleep(5000);
@@ -33,6 +37,7 @@ public class ExecuteAsyncTaskService {
     @Async("asyncServiceExecutor")
     public Future<String> executeAsyncTaskReturn(Integer n){
         try {
+            System.out.println("this is main thread");
             Thread.sleep(n);
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -41,15 +46,18 @@ public class ExecuteAsyncTaskService {
         return new AsyncResult<>("任务完成");
     }
 
-    @MethodLog(sysName = "log",logInfo = "is test index return")
+    @MethodLog(logInfo = "is test index return")
     public String index(int i) throws Exception  {
+
+        logger.info("this is main thread");
         try {
+
             Thread.sleep(7000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
         if (1==1){
-            throw new Exception("is error");
+            //throw new Exception("is error");
         }
 
 

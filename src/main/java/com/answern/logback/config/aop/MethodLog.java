@@ -17,13 +17,14 @@ import java.lang.annotation.Target;
 public @interface MethodLog {
 
     /**
-     * 系统名称
-     * @return
-     */
-    String sysName();
-    /**
-     * 日志信息
+     * 自定义日志信息
      * @return
      */
     String logInfo();
+
+    /**
+     * 是否本系统打印，默认为打印
+     * @return
+     */
+    boolean isTrue() default true;
 }

@@ -45,14 +45,14 @@ public class ExecuteAsyncTaskController {
      * test
      * @return
      */
-    @ControllerLog(sysName = "test",logInfo = "ok")
+    @ControllerLog(logInfo = "ok" )
     @RequestMapping(value = "index" ,method = RequestMethod.GET)
     public String index()  {
         String isok = null;
         try {
             isok = executeAsyncTaskService.index(70);
         } catch (Exception e) {
-           // e.printStackTrace();
+            e.printStackTrace();
         }
 
         return isok;

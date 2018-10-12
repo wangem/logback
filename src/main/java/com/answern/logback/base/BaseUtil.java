@@ -1,13 +1,16 @@
 package com.answern.logback.base;
 
+import ch.qos.logback.core.net.SyslogOutputStream;
 import com.alibaba.fastjson.JSON;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.SystemUtils;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
@@ -66,14 +69,29 @@ public class BaseUtil {
         return ipString;
     }
 
+    /**
+     * 获取系统服务名称
+     * @return
+     */
+    private static String SYSTEM_NAME;
+    public static String getSystemName(){
+        if(!StringUtils.isNotEmpty(SYSTEM_NAME)){
+            SYSTEM_NAME =  SystemUtils.getUserDir().getName();
+        }
+        return SYSTEM_NAME;
+    }
+
 
 
 
 
     public static void main(String[] args) {
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS");//设置日期格式
-        System.out.println(df.format(new Date()));// new Date()为获取当前系统时间
-        System.out.println(new Date());// new Date()为获取当前系统时间
-        System.out.println(System.currentTimeMillis());// new Date()为获取当前系统时间
+//        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS");//设置日期格式
+//        System.out.println(df.format(new Date()));// new Date()为获取当前系统时间
+//        System.out.println(new Date());// new Date()为获取当前系统时间
+//        System.out.println(System.currentTimeMillis());// new Date()为获取当前系统时间
+        File property = SystemUtils.getUserDir();
+        System.out.println(property.getName());
+        System.out.println(property.getParent());
     }
 }
