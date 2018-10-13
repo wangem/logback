@@ -1,5 +1,6 @@
 package com.answern.logback.config.aop;
 
+import com.answern.logback.base.BaseLogger;
 import com.answern.logback.base.BaseUtil;
 import com.answern.logback.server.CMQServer;
 import org.aspectj.lang.JoinPoint;
@@ -9,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
+import org.springframework.util.ObjectUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
@@ -28,8 +30,8 @@ import java.util.*;
 public class AopMethodServer {
 
     private  Logger logger = LoggerFactory.getLogger(AopMethodServer.class);
-    @Autowired
-    private CMQServer cmqServer;
+
+
 
     /**
      * Method执行方法之前调用
@@ -53,7 +55,7 @@ public class AopMethodServer {
         map.put("信息",test.logInfo());
         map.put("开始","ok");
         boolean isPrint = test.isTrue();
-        printLogger(map,isPrint);
+        BaseLogger.printLogger(map,isPrint);
 //        logger.info("id:{},系统名称:{},ip:{},当前时间:{} , time:{},类名称:{},方法名称:{},信息:{}，开始",
 //                id, test.sysName(), BaseUtil.getLocalIp(), BaseUtil.getFormatTime(), System.currentTimeMillis(),
 //                point.getTarget().getClass().getName(), point.getSignature().getName(), test.logInfo());
@@ -78,7 +80,7 @@ public class AopMethodServer {
         map.put("time",System.currentTimeMillis());
         map.put("结束","ok");
         boolean isPrint = test.isTrue();
-        printLogger(map,isPrint);
+        BaseLogger.printLogger(map,isPrint);
     }
 
     /**
@@ -106,7 +108,7 @@ public class AopMethodServer {
         map.put("信息",test.logInfo());
         map.put("开始","ok");
         boolean isPrint = test.isTrue();
-        printLogger(map,isPrint);
+        BaseLogger.printLogger(map,isPrint);
     }
 
     /**
@@ -125,7 +127,7 @@ public class AopMethodServer {
         map.put("time",System.currentTimeMillis());
         map.put("结束","ok");
         boolean isPrint = test.isTrue();
-        printLogger(map,isPrint);
+        BaseLogger.printLogger(map,isPrint);
     }
 
     /**
@@ -151,7 +153,7 @@ public class AopMethodServer {
         map.put("信息",test.logInfo());
         map.put("异常信息",e);
         boolean isPrint = test.isTrue();
-        printLogger(map,isPrint);
+        BaseLogger.printLogger(map,isPrint);
     }
 
     /**
@@ -174,35 +176,8 @@ public class AopMethodServer {
         map.put("信息",test.logInfo());
         map.put("异常信息",e);
         boolean isPrint = test.isTrue();
-        printLogger(map,isPrint);
+        BaseLogger.printLogger(map,isPrint);
     }
-
-    /**
-     *整理输出信息
-     * @param map
-     */
-    public void printLogger(LinkedHashMap map,boolean isPrint){
-        StringBuffer info = new StringBuffer();
-        Iterator it = map.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry entity = (Map.Entry) it.next();
-            info.append(entity.getKey());
-            info.append(":");
-            info.append(entity.getValue());
-            if(it.hasNext()){
-                info.append(",");
-            }
-        }
-        if(isPrint){
-            logger.info(info.toString());
-        }
-        //将日志信息发送到CMQ
-        cmqServer.sendMessageQueue(info.toString());
-
-
-    }
-
-
 
     /**
      * 获取方法的中文备注____用于记录用户的操作日志描述

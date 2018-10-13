@@ -18,7 +18,7 @@ import java.util.LinkedHashMap;
  * 创建时间:[2018/10/12 14:37]  <br/>
  * 版本:[v1.0]   <br/>
  */
-@Component
+
 public class CMQServer {
 
     private CMQQueueProducer cmqQueueProducer;
@@ -26,7 +26,7 @@ public class CMQServer {
         cmqQueueProducer = new CMQQueueProducer(Constant.QUEUE_ENDPOINT,Constant.CMQ_SECRETID,Constant.CMQ_SECRETKEY);
     }
     @Value("${spring.queue.logger.name}")
-    private String queueName;
+    private String queueName=Constant.CMQ_QUEUENAME;
 
     private Logger logger = LoggerFactory.getLogger(CMQServer.class);
     public  String sendMessageQueue(String message) {

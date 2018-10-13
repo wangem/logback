@@ -23,5 +23,6 @@ public class Constant {
      * 用于加密签名字符串和服务器端验证签名字符串的密钥
      */
     public final static String CMQ_SECRETKEY="qZL0f8QWZRDxZ2MYZP6g5QadVKWwSp14";
+    public final static String CMQ_QUEUENAME="loggerQueue";
 
 }
