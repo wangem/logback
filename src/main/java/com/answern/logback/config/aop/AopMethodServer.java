@@ -46,7 +46,7 @@ public class AopMethodServer {
         LinkedHashMap map = new LinkedHashMap();
         map.put("流程Id",id);
         map.put("cid",cid);
-        map.put("系统名称",BaseUtil.getSystemName());
+        map.put("systemName",BaseUtil.getSystemName());
         map.put("ip",BaseUtil.getLocalIp());
         map.put("当前时间",BaseUtil.getFormatTime());
         map.put("time",System.currentTimeMillis());
@@ -56,7 +56,7 @@ public class AopMethodServer {
         map.put("开始","ok");
         boolean isPrint = test.isTrue();
         BaseLogger.printLogger(map,isPrint);
-//        logger.info("id:{},系统名称:{},ip:{},当前时间:{} , time:{},类名称:{},方法名称:{},信息:{}，开始",
+//        logger.info("id:{},systemName:{},ip:{},当前时间:{} , time:{},类名称:{},方法名称:{},信息:{}，开始",
 //                id, test.sysName(), BaseUtil.getLocalIp(), BaseUtil.getFormatTime(), System.currentTimeMillis(),
 //                point.getTarget().getClass().getName(), point.getSignature().getName(), test.logInfo());
 
@@ -74,7 +74,7 @@ public class AopMethodServer {
         LinkedHashMap map = new LinkedHashMap();
         map.put("流程Id",id);
         map.put("cid",cid);
-        map.put("系统名称",BaseUtil.getSystemName());
+        map.put("systemName",BaseUtil.getSystemName());
         map.put("ip",BaseUtil.getLocalIp());
         map.put("当前时间",BaseUtil.getFormatTime());
         map.put("time",System.currentTimeMillis());
@@ -96,7 +96,7 @@ public class AopMethodServer {
 
         LinkedHashMap map = new LinkedHashMap();
         map.put("流程Id",id);
-        map.put("系统名称",BaseUtil.getSystemName());
+        map.put("systemName",BaseUtil.getSystemName());
         map.put("ip",BaseUtil.getLocalIp());
         map.put("当前时间",BaseUtil.getFormatTime());
         map.put("time",System.currentTimeMillis());
@@ -121,7 +121,7 @@ public class AopMethodServer {
     void aopControllerAfter(String id,   ControllerLog test) {
         LinkedHashMap map = new LinkedHashMap();
         map.put("流程Id",id);
-        map.put("系统名称",BaseUtil.getSystemName());
+        map.put("systemName",BaseUtil.getSystemName());
         map.put("ip",BaseUtil.getLocalIp());
         map.put("当前时间",BaseUtil.getFormatTime());
         map.put("time",System.currentTimeMillis());
@@ -141,7 +141,7 @@ public class AopMethodServer {
     void aopControllerAfterThrowing(String id, JoinPoint point, ControllerLog test, HttpServletRequest request, Exception e) {
         LinkedHashMap map = new LinkedHashMap();
         map.put("流程Id",id);
-        map.put("系统名称",BaseUtil.getSystemName());
+        map.put("systemName",BaseUtil.getSystemName());
         map.put("ip",BaseUtil.getLocalIp());
         map.put("当前时间",BaseUtil.getFormatTime());
         map.put("time",System.currentTimeMillis());
@@ -167,7 +167,7 @@ public class AopMethodServer {
     void aopMethodAfterThrowing(String id, JoinPoint point, MethodLog test, Exception e) {
         LinkedHashMap map = new LinkedHashMap();
         map.put("流程Id",id);
-        map.put("系统名称",BaseUtil.getSystemName());
+        map.put("systemName",BaseUtil.getSystemName());
         map.put("ip",BaseUtil.getLocalIp());
         map.put("当前时间",BaseUtil.getFormatTime());
         map.put("time",System.currentTimeMillis());

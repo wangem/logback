@@ -31,7 +31,7 @@ public class BaseLogger {
 
         LinkedHashMap map = new LinkedHashMap();
         map.put("流程Id", UUID.randomUUID().toString());
-        map.put("系统名称",BaseUtil.getSystemName());
+        map.put("systemName",BaseUtil.getSystemName());
         map.put("ip",BaseUtil.getLocalIp());
         map.put("当前时间",BaseUtil.getFormatTime());
         map.put("time",System.currentTimeMillis());
