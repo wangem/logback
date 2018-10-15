@@ -44,19 +44,19 @@ public class AopMethodServer {
     @Async("asyncServiceExecutor")
     void aopMethodBefore(String id,String cid, ProceedingJoinPoint point, MethodLog test) {
         LinkedHashMap map = new LinkedHashMap();
-        map.put("流程Id",id);
+        map.put("Process Id",id);
         map.put("cid",cid);
         map.put("systemName",BaseUtil.getSystemName());
         map.put("ip",BaseUtil.getLocalIp());
-        map.put("当前时间",BaseUtil.getFormatTime());
+        map.put("time Date",BaseUtil.getFormatTime());
         map.put("time",System.currentTimeMillis());
-        map.put("类名称",point.getTarget().getClass().getName());
-        map.put("方法名称",point.getSignature().getName());
-        map.put("信息",test.logInfo());
-        map.put("开始","ok");
+        map.put("ClassName",point.getTarget().getClass().getName());
+        map.put("MethodName",point.getSignature().getName());
+        map.put("Message",test.logInfo());
+        map.put("start","ok");
         boolean isPrint = test.isTrue();
         BaseLogger.printLogger(map,isPrint);
-//        logger.info("id:{},systemName:{},ip:{},当前时间:{} , time:{},类名称:{},方法名称:{},信息:{}，开始",
+//        logger.info("id:{},systemName:{},ip:{},time Date:{} , time:{},ClassName:{},MethodName:{},Message:{}，start",
 //                id, test.sysName(), BaseUtil.getLocalIp(), BaseUtil.getFormatTime(), System.currentTimeMillis(),
 //                point.getTarget().getClass().getName(), point.getSignature().getName(), test.logInfo());
 
@@ -72,13 +72,13 @@ public class AopMethodServer {
     @Async("asyncServiceExecutor")
     void aopMethodAfter(String id,String cid, ProceedingJoinPoint point, MethodLog test) {
         LinkedHashMap map = new LinkedHashMap();
-        map.put("流程Id",id);
+        map.put("Process Id",id);
         map.put("cid",cid);
         map.put("systemName",BaseUtil.getSystemName());
         map.put("ip",BaseUtil.getLocalIp());
-        map.put("当前时间",BaseUtil.getFormatTime());
+        map.put("time Date",BaseUtil.getFormatTime());
         map.put("time",System.currentTimeMillis());
-        map.put("结束","ok");
+        map.put("end","ok");
         boolean isPrint = test.isTrue();
         BaseLogger.printLogger(map,isPrint);
     }
@@ -95,18 +95,18 @@ public class AopMethodServer {
     void aopControllerBefore(String id, ProceedingJoinPoint point, ControllerLog test, HttpServletRequest request) {
 
         LinkedHashMap map = new LinkedHashMap();
-        map.put("流程Id",id);
+        map.put("Process Id",id);
         map.put("systemName",BaseUtil.getSystemName());
         map.put("ip",BaseUtil.getLocalIp());
-        map.put("当前时间",BaseUtil.getFormatTime());
+        map.put("time Date",BaseUtil.getFormatTime());
         map.put("time",System.currentTimeMillis());
-        map.put("访问地址",request.getRequestURL().toString());
-        map.put("请求方式",request.getMethod());
-        map.put("参数",request.getQueryString());
-        map.put("类名称",point.getTarget().getClass().getName());
-        map.put("方法名称",point.getSignature().getName());
-        map.put("信息",test.logInfo());
-        map.put("开始","ok");
+        map.put("RequestURL",request.getRequestURL().toString());
+        map.put("RequestType",request.getMethod());
+        map.put("parameter",request.getQueryString());
+        map.put("ClassName",point.getTarget().getClass().getName());
+        map.put("MethodName",point.getSignature().getName());
+        map.put("Message",test.logInfo());
+        map.put("start","ok");
         boolean isPrint = test.isTrue();
         BaseLogger.printLogger(map,isPrint);
     }
@@ -120,12 +120,12 @@ public class AopMethodServer {
     @Async("asyncServiceExecutor")
     void aopControllerAfter(String id,   ControllerLog test) {
         LinkedHashMap map = new LinkedHashMap();
-        map.put("流程Id",id);
+        map.put("Process Id",id);
         map.put("systemName",BaseUtil.getSystemName());
         map.put("ip",BaseUtil.getLocalIp());
-        map.put("当前时间",BaseUtil.getFormatTime());
+        map.put("time Date",BaseUtil.getFormatTime());
         map.put("time",System.currentTimeMillis());
-        map.put("结束","ok");
+        map.put("end","ok");
         boolean isPrint = test.isTrue();
         BaseLogger.printLogger(map,isPrint);
     }
@@ -140,18 +140,18 @@ public class AopMethodServer {
     @Async("asyncServiceExecutor")
     void aopControllerAfterThrowing(String id, JoinPoint point, ControllerLog test, HttpServletRequest request, Exception e) {
         LinkedHashMap map = new LinkedHashMap();
-        map.put("流程Id",id);
+        map.put("Process Id",id);
         map.put("systemName",BaseUtil.getSystemName());
         map.put("ip",BaseUtil.getLocalIp());
-        map.put("当前时间",BaseUtil.getFormatTime());
+        map.put("time Date",BaseUtil.getFormatTime());
         map.put("time",System.currentTimeMillis());
-        map.put("访问地址",request.getRequestURL().toString());
-        map.put("请求方式",request.getMethod());
-        map.put("参数",request.getQueryString());
-        map.put("类名称",point.getTarget().getClass().getName());
-        map.put("方法名称",point.getSignature().getName());
-        map.put("信息",test.logInfo());
-        map.put("异常信息",e);
+        map.put("RequestURL",request.getRequestURL().toString());
+        map.put("RequestType",request.getMethod());
+        map.put("parameter",request.getQueryString());
+        map.put("ClassName",point.getTarget().getClass().getName());
+        map.put("MethodName",point.getSignature().getName());
+        map.put("Message",test.logInfo());
+        map.put("ErrorInfo",e);
         boolean isPrint = test.isTrue();
         BaseLogger.printLogger(map,isPrint);
     }
@@ -166,15 +166,15 @@ public class AopMethodServer {
     @Async("asyncServiceExecutor")
     void aopMethodAfterThrowing(String id, JoinPoint point, MethodLog test, Exception e) {
         LinkedHashMap map = new LinkedHashMap();
-        map.put("流程Id",id);
+        map.put("Process Id",id);
         map.put("systemName",BaseUtil.getSystemName());
         map.put("ip",BaseUtil.getLocalIp());
-        map.put("当前时间",BaseUtil.getFormatTime());
+        map.put("time Date",BaseUtil.getFormatTime());
         map.put("time",System.currentTimeMillis());
-        map.put("类名称",point.getTarget().getClass().getName());
-        map.put("方法名称",point.getSignature().getName());
-        map.put("信息",test.logInfo());
-        map.put("异常信息",e);
+        map.put("ClassName",point.getTarget().getClass().getName());
+        map.put("MethodName",point.getSignature().getName());
+        map.put("Message",test.logInfo());
+        map.put("ErrorInfo",e);
         boolean isPrint = test.isTrue();
         BaseLogger.printLogger(map,isPrint);
     }
@@ -189,7 +189,7 @@ public class AopMethodServer {
             String targetName = target.getClass().getName();
             //返回当前连接点签名
             String methodName = joinPoint.getSignature().getName();
-            //获得参数列表
+            //获得parameter列表
             Object[] arguments = joinPoint.getArgs();
 
             Class targetClass = Class.forName(targetName);

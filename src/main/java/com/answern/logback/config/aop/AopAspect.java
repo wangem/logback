@@ -71,7 +71,6 @@ public class AopAspect {
     @Around("@annotation(test)")
     public Object aroundClassLog(ProceedingJoinPoint point, ClassLog test) throws Throwable {
         id = UUID.randomUUID().toString();
-        System.out.println("============================");
         // 调用前日志处理
        // aopMethodServer.aopMethodBefore(id, point, test);
         Object aThis = point.proceed();
@@ -106,7 +105,7 @@ public class AopAspect {
 //    }
 
     /**
-     * 返回参数中类似  "#user.getUserName()" 的数据
+     * 返回parameter中类似  "#user.getUserName()" 的数据
      * <p>
      * 调用方法  Method method = getMethod(joinPoint);　//自定义注解类
      * Cacheable cacheable = method.getAnnotation(Cacheable.class);<br>　　　　　//获取key值　<br>　　　　　String key = cacheable.key();<br>　　　　　String fieldKey=cacheable.fieldKey();<br>
@@ -117,7 +116,7 @@ public class AopAspect {
      * @return
      */
     private Method getMethod(JoinPoint pjp) {
-        //获取参数的类型
+        //获取parameter的类型
         Object[] args = pjp.getArgs();
         Class[] argTypes = new Class[pjp.getArgs().length];
         for (int i = 0; i < args.length; i++) {

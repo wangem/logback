@@ -21,29 +21,29 @@ public class BaseLogger {
 
     private static Logger logger = LoggerFactory.getLogger(BaseLogger.class);
     /**
-     * 传入打印的日志信息，按顺序打印
+     * 传入打印的日志Message，按顺序打印
      * 例如： map.put("id","1234"); map.put("name","name")
      *     打印为 id:1234,name:name
-     * @param mapOrder 传入要打印的日志信息
+     * @param mapOrder 传入要打印的日志Message
      */
 
     public static void loggerRecord(LinkedHashMap mapOrder){
 
         LinkedHashMap map = new LinkedHashMap();
-        map.put("流程Id", UUID.randomUUID().toString());
+        map.put("Process Id", UUID.randomUUID().toString());
         map.put("systemName",BaseUtil.getSystemName());
         map.put("ip",BaseUtil.getLocalIp());
-        map.put("当前时间",BaseUtil.getFormatTime());
+        map.put("time Date",BaseUtil.getFormatTime());
         map.put("time",System.currentTimeMillis());
         map.putAll(mapOrder);
-//        map.put("类名称",point.getTarget().getClass().getName());
-//        map.put("方法名称",point.getSignature().getName());
-//        map.put("信息",test.logInfo());
+//        map.put("ClassName",point.getTarget().getClass().getName());
+//        map.put("MethodName",point.getSignature().getName());
+//        map.put("Message",test.logInfo());
         printLogger(map,true);
     }
 
     /**
-     *整理输出信息
+     *整理输出Message
      * @param map
      */
     public static void printLogger(LinkedHashMap map,boolean isPrint){
@@ -64,7 +64,7 @@ public class BaseLogger {
         if(isPrint){
             logger.info(info.toString());
         }
-        //将日志信息发送到CMQ
+        //将日志Message发送到CMQ
         cmqServer.sendMessageQueue(info.toString());
     }
 
