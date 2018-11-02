@@ -23,10 +23,10 @@ import java.util.concurrent.ThreadPoolExecutor;
  */
 @Configuration
 @EnableAsync //在本类调用是不起作用的情况下增加此注解
-public class ThreadAsyncConfigurer implements AsyncConfigurer {
-    private Logger logger = LoggerFactory.getLogger(ThreadAsyncConfigurer.class);
+public class ThreadAsyncConfig implements AsyncConfigurer {
+    private Logger logger = LoggerFactory.getLogger(ThreadAsyncConfig.class);
     @Bean
-    public Executor asyncServiceExecutor() {
+    public Executor asyncServiceExecutors() {
         ThreadPoolTaskExecutor threadPool = new ThreadPoolTaskExecutor();
         //设置核心线程数
         threadPool.setCorePoolSize(10);
@@ -54,7 +54,7 @@ public class ThreadAsyncConfigurer implements AsyncConfigurer {
         return new AsyncUncaughtExceptionHandler() {
             @Override
             public void handleUncaughtException(Throwable arg0, Method arg1, Object... arg2) {
-                logger.error("=========================="+arg0.getMessage()+"=======================", arg0);
+                logger.error("=======================loggerError="+arg0.getMessage()+"Please ignore=======================", arg0);
                 logger.error("exception method:" + arg1.getName());
             }
         };

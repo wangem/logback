@@ -1,12 +1,10 @@
 package com.answern.logback.server;
 
-import com.answen.mq.quene.CMQQueueProducer;
 import com.answern.logback.base.BaseLogger;
 import com.answern.logback.base.Constant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 
 import java.util.LinkedHashMap;
 
@@ -23,7 +21,7 @@ public class CMQServer {
 
     private CMQQueueProducer cmqQueueProducer;
     public CMQServer(){
-        cmqQueueProducer = new CMQQueueProducer(Constant.QUEUE_ENDPOINT,Constant.CMQ_SECRETID,Constant.CMQ_SECRETKEY);
+       cmqQueueProducer = new CMQQueueProducer(Constant.QUEUE_ENDPOINT,Constant.CMQ_SECRETID,Constant.CMQ_SECRETKEY);
     }
     @Value("${spring.queue.logger.name}")
     private String queueName=Constant.CMQ_QUEUENAME;

@@ -1,6 +1,5 @@
 package com.answern.logback.config.aop;
 
-import com.answern.logback.base.BaseUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -9,15 +8,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
-import org.springframework.scheduling.annotation.Async;
-import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.UUID;
 
 /**
@@ -31,10 +26,10 @@ import java.util.UUID;
 
 @Aspect
 @Order(-99) // 控制多个Aspect的执行顺序，越小越先执行
-@Component
-public class AopAspect {
+//@Component
+public class AopAspects {
 
-    private Logger logger = LoggerFactory.getLogger(AopAspect.class);
+    private Logger logger = LoggerFactory.getLogger(AopAspects.class);
     private String id = null;
     @Autowired
     AopMethodServer aopMethodServer;
@@ -56,10 +51,8 @@ public class AopAspect {
 
     @Around("@annotation(test)")
     public Object aroundControllerLog(ProceedingJoinPoint point, ControllerLog test) throws Throwable {
-        ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        HttpServletRequest request = requestAttributes.getRequest();
+        HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest();
         id = UUID.randomUUID().toString();
-
         // 调用前日志处理
         aopMethodServer.aopControllerBefore(id, point, test, request);
         Object aThis = point.proceed();

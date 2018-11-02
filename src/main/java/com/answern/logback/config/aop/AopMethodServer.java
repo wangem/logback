@@ -2,15 +2,13 @@ package com.answern.logback.config.aop;
 
 import com.answern.logback.base.BaseLogger;
 import com.answern.logback.base.BaseUtil;
-import com.answern.logback.server.CMQServer;
+import org.apache.commons.lang3.ObjectUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
-import org.springframework.stereotype.Component;
-import org.springframework.util.ObjectUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
@@ -26,10 +24,10 @@ import java.util.*;
  * 版本:[v1.0]   <br/>
  */
 
-@Component
+//@Component
 public class AopMethodServer {
 
-    private  Logger logger = LoggerFactory.getLogger(AopMethodServer.class);
+    //private  Logger logger = LoggerFactory.getLogger(AopMethodServer.class);
 
 
 
@@ -41,7 +39,7 @@ public class AopMethodServer {
      * @param test
      * @throws InterruptedException
      */
-    @Async("asyncServiceExecutor")
+    @Async("asyncServiceExecutors")
     void aopMethodBefore(String id,String cid, ProceedingJoinPoint point, MethodLog test) {
         LinkedHashMap map = new LinkedHashMap();
         map.put("Process Id",id);
@@ -69,7 +67,7 @@ public class AopMethodServer {
      * @param point
      * @param test
      */
-    @Async("asyncServiceExecutor")
+    @Async("asyncServiceExecutors")
     void aopMethodAfter(String id,String cid, ProceedingJoinPoint point, MethodLog test) {
         LinkedHashMap map = new LinkedHashMap();
         map.put("Process Id",id);
@@ -91,7 +89,7 @@ public class AopMethodServer {
      * @param test
      * @throws InterruptedException
      */
-    @Async("asyncServiceExecutor")
+    @Async("asyncServiceExecutors")
     void aopControllerBefore(String id, ProceedingJoinPoint point, ControllerLog test, HttpServletRequest request) {
 
         LinkedHashMap map = new LinkedHashMap();
@@ -100,9 +98,18 @@ public class AopMethodServer {
         map.put("ip",BaseUtil.getLocalIp());
         map.put("time Date",BaseUtil.getFormatTime());
         map.put("time",System.currentTimeMillis());
-        map.put("RequestURL",request.getRequestURL().toString());
-        map.put("RequestType",request.getMethod());
-        map.put("parameter",request.getQueryString());
+
+        try {
+            if(StringUtils.isNotEmpty(request.getRequestURL())){
+                map.put("RequestURL",request.getRequestURL());
+            } else {
+                map.put("RequestURL","get URL is null");
+            }
+            map.put("RequestType",request.getMethod());
+            map.put("parameter",request.getQueryString());
+        }catch (Exception e){
+            map.put("Request","Request Return too fast so request is null");
+        }
         map.put("ClassName",point.getTarget().getClass().getName());
         map.put("MethodName",point.getSignature().getName());
         map.put("Message",test.logInfo());
@@ -117,7 +124,7 @@ public class AopMethodServer {
      * @param id
      * @param test
      */
-    @Async("asyncServiceExecutor")
+    @Async("asyncServiceExecutors")
     void aopControllerAfter(String id,   ControllerLog test) {
         LinkedHashMap map = new LinkedHashMap();
         map.put("Process Id",id);
@@ -137,7 +144,7 @@ public class AopMethodServer {
      * @param point
      * @param test
      */
-    @Async("asyncServiceExecutor")
+    @Async("asyncServiceExecutors")
     void aopControllerAfterThrowing(String id, JoinPoint point, ControllerLog test, HttpServletRequest request, Exception e) {
         LinkedHashMap map = new LinkedHashMap();
         map.put("Process Id",id);
@@ -163,7 +170,7 @@ public class AopMethodServer {
      * @param point
      * @param test
      */
-    @Async("asyncServiceExecutor")
+    @Async("asyncServiceExecutors")
     void aopMethodAfterThrowing(String id, JoinPoint point, MethodLog test, Exception e) {
         LinkedHashMap map = new LinkedHashMap();
         map.put("Process Id",id);
