@@ -24,7 +24,7 @@ public class AutoConfigurationLogBack {
 
     @Bean
     public AopMethodServer aopMethodServer(){
-        System.out.println("进入这个aopMethodServer");
+        System.out.println("Load aopMethodServer");
         return new  AopMethodServer();
     }
     @Bean
