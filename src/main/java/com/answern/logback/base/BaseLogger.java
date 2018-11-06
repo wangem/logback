@@ -1,5 +1,6 @@
 package com.answern.logback.base;
 
+import com.answern.logback.config.CMQProducerProperties;
 import com.answern.logback.server.CMQServer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +20,8 @@ import java.util.UUID;
  */
 public class BaseLogger {
 
+
+
     private static Logger logger = LoggerFactory.getLogger(BaseLogger.class);
     /**
      * 传入打印的日志Message，按顺序打印
@@ -27,7 +30,7 @@ public class BaseLogger {
      * @param mapOrder 传入要打印的日志Message
      */
 
-    public static void loggerRecord(LinkedHashMap mapOrder){
+    public static void loggerRecord(CMQProducerProperties cmqProducerProperties,LinkedHashMap mapOrder){
 
         LinkedHashMap map = new LinkedHashMap();
         map.put("Process Id", UUID.randomUUID().toString());
@@ -39,16 +42,16 @@ public class BaseLogger {
 //        map.put("ClassName",point.getTarget().getClass().getName());
 //        map.put("MethodName",point.getSignature().getName());
 //        map.put("Message",test.logInfo());
-        printLogger(map,true);
+        printLogger(cmqProducerProperties,map,true);
     }
 
     /**
-     *整理输出Message
+     *
+     * @param cmqProducerProperties
      * @param map
+     * @param isPrint
      */
-    public static void printLogger(LinkedHashMap map,boolean isPrint){
-        CMQServer cmqServer   = new CMQServer();
-
+    public static void printLogger(CMQProducerProperties cmqProducerProperties,LinkedHashMap map,boolean isPrint){
 
         StringBuffer info = new StringBuffer();
         Iterator it = map.entrySet().iterator();
@@ -65,7 +68,17 @@ public class BaseLogger {
             logger.info(info.toString());
         }
         //将日志Message发送到CMQ
-        cmqServer.sendMessageQueue(info.toString());
+        new CMQServer(cmqProducerProperties).sendMessageQueue(info.toString());
+    }
+
+    /**
+     *
+     * @param map
+     * @param isPrint
+     */
+    public static void printLogger(LinkedHashMap map,boolean isPrint){
+        CMQProducerProperties cmqProducerProperties = new CMQProducerProperties();
+        printLogger( cmqProducerProperties, map, isPrint);
     }
 
 }

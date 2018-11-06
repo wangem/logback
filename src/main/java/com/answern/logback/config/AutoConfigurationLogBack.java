@@ -2,10 +2,6 @@ package com.answern.logback.config;
 
 import com.answern.logback.config.aop.AopAspects;
 import com.answern.logback.config.aop.AopMethodServer;
-import org.springframework.boot.autoconfigure.AutoConfigurationPackage;
-import org.springframework.boot.autoconfigure.AutoConfigureOrder;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -19,7 +15,8 @@ import org.springframework.context.annotation.Import;
  * 版本:[v1.0]   <br/>
  */
 @Configuration
-@Import(ThreadAsyncConfig.class)
+//@EnableConfigurationProperties(CMQProducerProperties.class)
+@Import({ThreadAsyncConfig.class,CMQProducerProperties.class})
 public class AutoConfigurationLogBack {
 
     @Bean
@@ -31,4 +28,7 @@ public class AutoConfigurationLogBack {
     public AopAspects aopAspects(){
         return new AopAspects();
     }
+
+
+
 }

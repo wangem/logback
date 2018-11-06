@@ -2,12 +2,14 @@ package com.answern.logback.config.aop;
 
 import com.answern.logback.base.BaseLogger;
 import com.answern.logback.base.BaseUtil;
+import com.answern.logback.config.CMQProducerProperties;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,12 +26,12 @@ import java.util.*;
  * 版本:[v1.0]   <br/>
  */
 
-//@Component
 public class AopMethodServer {
 
     //private  Logger logger = LoggerFactory.getLogger(AopMethodServer.class);
 
-
+    @Autowired
+    private CMQProducerProperties cmqProducerProperties;
 
     /**
      * Method执行方法之前调用
@@ -53,7 +55,7 @@ public class AopMethodServer {
         map.put("Message",test.logInfo());
         map.put("start","ok");
         boolean isPrint = test.isTrue();
-        BaseLogger.printLogger(map,isPrint);
+        BaseLogger.printLogger(cmqProducerProperties,map,isPrint);
 //        logger.info("id:{},systemName:{},ip:{},time Date:{} , time:{},ClassName:{},MethodName:{},Message:{}，start",
 //                id, test.sysName(), BaseUtil.getLocalIp(), BaseUtil.getFormatTime(), System.currentTimeMillis(),
 //                point.getTarget().getClass().getName(), point.getSignature().getName(), test.logInfo());
@@ -78,7 +80,7 @@ public class AopMethodServer {
         map.put("time",System.currentTimeMillis());
         map.put("end","ok");
         boolean isPrint = test.isTrue();
-        BaseLogger.printLogger(map,isPrint);
+        BaseLogger.printLogger(cmqProducerProperties,map,isPrint);
     }
 
     /**
@@ -115,7 +117,7 @@ public class AopMethodServer {
         map.put("Message",test.logInfo());
         map.put("start","ok");
         boolean isPrint = test.isTrue();
-        BaseLogger.printLogger(map,isPrint);
+        BaseLogger.printLogger(cmqProducerProperties,map,isPrint);
     }
 
     /**
@@ -134,7 +136,7 @@ public class AopMethodServer {
         map.put("time",System.currentTimeMillis());
         map.put("end","ok");
         boolean isPrint = test.isTrue();
-        BaseLogger.printLogger(map,isPrint);
+        BaseLogger.printLogger(cmqProducerProperties,map,isPrint);
     }
 
     /**
@@ -160,7 +162,7 @@ public class AopMethodServer {
         map.put("Message",test.logInfo());
         map.put("ErrorInfo",e);
         boolean isPrint = test.isTrue();
-        BaseLogger.printLogger(map,isPrint);
+        BaseLogger.printLogger(cmqProducerProperties,map,isPrint);
     }
 
     /**
@@ -183,7 +185,7 @@ public class AopMethodServer {
         map.put("Message",test.logInfo());
         map.put("ErrorInfo",e);
         boolean isPrint = test.isTrue();
-        BaseLogger.printLogger(map,isPrint);
+        BaseLogger.printLogger(cmqProducerProperties,map,isPrint);
     }
 
     /**

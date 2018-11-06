@@ -1,0 +1,9 @@
+{
+  "groups": [
+    {
+      "name": "answern.cmq",
+      "type": "com.answern.logback.config.CMQProducerProperties",
+      "sourceType": "com.answern.logback.config.CMQProducerProperties"
+    }
+  ]
+}

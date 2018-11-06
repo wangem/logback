@@ -1,5 +1,6 @@
 package com.answern.logback.config.aop;
 
+import com.answern.logback.config.CMQProducerProperties;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -25,8 +26,7 @@ import java.util.UUID;
  */
 
 @Aspect
-@Order(-99) // 控制多个Aspect的执行顺序，越小越先执行
-//@Component
+@Order(0) // 控制多个Aspect的执行顺序，越小越先执行
 public class AopAspects {
 
     private Logger logger = LoggerFactory.getLogger(AopAspects.class);
@@ -34,17 +34,23 @@ public class AopAspects {
     @Autowired
     AopMethodServer aopMethodServer;
 
+    @Autowired
+    private CMQProducerProperties cmqProducerProperties;
+
     @Around("@annotation(test)")
-    public Object aroundMethodLog(ProceedingJoinPoint point, MethodLog test) throws Throwable {
+    public Object aroundMethodLog(ProceedingJoinPoint point,MethodLog test) throws Throwable {
 
         if (!StringUtils.isNotEmpty(id)){
             id = UUID.randomUUID().toString();
         }
+        System.out.print(cmqProducerProperties.getQueue_endpoint());
+
         String cid =UUID.randomUUID().toString();
+        //System.out.println("After MethodLog");
         // 调用前日志处理
         aopMethodServer.aopMethodBefore(id,cid,point, test);
-        Object aThis = point.proceed();
-        // 调用后日志处理
+        Object aThis =point.proceed();
+//         调用后日志处理
         aopMethodServer.aopMethodAfter(id,cid, point, test);
         return aThis;
     }
@@ -60,18 +66,6 @@ public class AopAspects {
         aopMethodServer.aopControllerAfter(id,  test);
         return aThis;
     }
-
-    @Around("@annotation(test)")
-    public Object aroundClassLog(ProceedingJoinPoint point, ClassLog test) throws Throwable {
-        id = UUID.randomUUID().toString();
-        // 调用前日志处理
-       // aopMethodServer.aopMethodBefore(id, point, test);
-        Object aThis = point.proceed();
-        // 调用后日志处理
-        //aopMethodServer.aopMethodAfter(id, point, test);
-        return aThis;
-    }
-
 
     @AfterThrowing(value = "@annotation(test)", throwing = "e")
     public void afterThrowingMethodLog(JoinPoint joinPoint, MethodLog test, Exception e) {

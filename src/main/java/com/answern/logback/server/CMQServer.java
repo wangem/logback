@@ -2,10 +2,9 @@ package com.answern.logback.server;
 
 import com.answern.logback.base.BaseLogger;
 import com.answern.logback.base.Constant;
+import com.answern.logback.config.CMQProducerProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
-
 import java.util.LinkedHashMap;
 
 /**
@@ -16,25 +15,33 @@ import java.util.LinkedHashMap;
  * 创建时间:[2018/10/12 14:37]  <br/>
  * 版本:[v1.0]   <br/>
  */
-
 public class CMQServer {
 
+
     private CMQQueueProducer cmqQueueProducer;
-    public CMQServer(){
-       cmqQueueProducer = new CMQQueueProducer(Constant.QUEUE_ENDPOINT,Constant.CMQ_SECRETID,Constant.CMQ_SECRETKEY);
+    private CMQProducerProperties cmqProducerProperties;
+//    public CMQServer(){
+//         cmqQueueProducer = new CMQQueueProducer(this.cmqProducerProperties.getQueue_endpoint(), this.cmqProducerProperties.getSecret_id(),   this.cmqProducerProperties.getSecret_key());
+//    }
+    public CMQServer(CMQProducerProperties cmqProducerProperties){
+     //   PropertyDescriptor[] propertyDescriptors = BeanUtils.getPropertyDescriptors(CMQProducerProperties.class);
+        this.cmqProducerProperties =cmqProducerProperties;
+
+      //  Object cMQQueueProducer = ContextLoader.getCurrentWebApplicationContext().getBean("CMQProducerProperties");
+//        this.cmqQueueProducer = new CMQQueueProducer(Constant.QUEUE_ENDPOINT, Constant.CMQ_SECRET_ID, Constant.CMQ_SECRET_KEY);
+        this.cmqQueueProducer = new CMQQueueProducer(cmqProducerProperties.getQueue_endpoint(),cmqProducerProperties.getSecret_id(),cmqProducerProperties.getSecret_key());
     }
-    @Value("${spring.queue.logger.name}")
-    private String queueName=Constant.CMQ_QUEUENAME;
 
     private Logger logger = LoggerFactory.getLogger(CMQServer.class);
     public  String sendMessageQueue(String message) {
          try {
-            return cmqQueueProducer.sendMessage(queueName, message);
+//            return cmqQueueProducer.sendMessage(Constant.CMQ_QUEUE_NAME, message);
+            return cmqQueueProducer.sendMessage(cmqProducerProperties.getQueue_name(), message);
         } catch (Exception e) {
             logger.error("sendMessageQueue exception",e);
             LinkedHashMap map = new LinkedHashMap();
             map.put("massage","CMQ logger message send error");
-            BaseLogger.loggerRecord(map);
+            BaseLogger.loggerRecord(cmqProducerProperties,map);
         }
         return null;
     }
