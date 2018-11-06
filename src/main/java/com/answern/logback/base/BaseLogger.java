@@ -27,6 +27,17 @@ public class BaseLogger {
      * 传入打印的日志Message，按顺序打印
      * 例如： map.put("id","1234"); map.put("name","name")
      *     打印为 id:1234,name:name
+     * @param map 传入要打印的日志Message
+     */
+    public static void loggerRecord(LinkedHashMap map){
+        CMQProducerProperties cmqProducerProperties = new CMQProducerProperties();
+        loggerRecord( cmqProducerProperties, map);
+    }
+    /**
+     * 传入打印的日志Message，按顺序打印
+     * 例如： map.put("id","1234"); map.put("name","name")
+     *     打印为 id:1234,name:name
+     * @param cmqProducerProperties 如果项目对cmq进行了修改需要传入该类
      * @param mapOrder 传入要打印的日志Message
      */
 
@@ -46,7 +57,7 @@ public class BaseLogger {
     }
 
     /**
-     *
+     * 发送打印日志信息到cmq
      * @param cmqProducerProperties
      * @param map
      * @param isPrint
@@ -69,16 +80,6 @@ public class BaseLogger {
         }
         //将日志Message发送到CMQ
         new CMQServer(cmqProducerProperties).sendMessageQueue(info.toString());
-    }
-
-    /**
-     *
-     * @param map
-     * @param isPrint
-     */
-    public static void printLogger(LinkedHashMap map,boolean isPrint){
-        CMQProducerProperties cmqProducerProperties = new CMQProducerProperties();
-        printLogger( cmqProducerProperties, map, isPrint);
     }
 
 }
