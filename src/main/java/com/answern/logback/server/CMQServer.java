@@ -16,7 +16,6 @@ import java.util.LinkedHashMap;
  */
 public class CMQServer {
 
-
     private CMQQueueProducer cmqQueueProducer;
     private CMQProducerProperties cmqProducerProperties;
 
@@ -24,7 +23,6 @@ public class CMQServer {
         this.cmqProducerProperties =cmqProducerProperties;
         this.cmqQueueProducer = new CMQQueueProducer(cmqProducerProperties.getQueue_endpoint(),cmqProducerProperties.getSecret_id(),cmqProducerProperties.getSecret_key());
     }
-
     private Logger logger = LoggerFactory.getLogger(CMQServer.class);
     public  String sendMessageQueue(String message) {
          try {

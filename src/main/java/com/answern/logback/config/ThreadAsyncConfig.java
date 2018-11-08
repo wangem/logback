@@ -31,9 +31,9 @@ public class ThreadAsyncConfig implements AsyncConfigurer {
         //设置核心线程数
         threadPool.setCorePoolSize(10);
         //设置最大线程数
-        threadPool.setMaxPoolSize(100);
+        threadPool.setMaxPoolSize(1000);
         //线程池所使用的缓冲队列
-        threadPool.setQueueCapacity(10);
+        threadPool.setQueueCapacity(50);
         //允许线程的空闲时间60秒：当超过了核心线程出之外的线程在空闲时间到达之后会被销毁
         threadPool.setKeepAliveSeconds(60);
         //等待任务在关机时完成--表明等待所有线程执行完  该方法就是这里的关键，用来设置线程池关闭的时候等待所有任务都完成再继续销毁其他的Bean

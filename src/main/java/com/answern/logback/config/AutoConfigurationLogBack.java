@@ -1,5 +1,7 @@
 package com.answern.logback.config;
 
+import com.answern.logback.base.BaseLoggerAsync;
+import com.answern.logback.base.BaseUtil;
 import com.answern.logback.config.aop.AopAspects;
 import com.answern.logback.config.aop.AopMethodServer;
 import org.springframework.context.annotation.Bean;
@@ -15,7 +17,6 @@ import org.springframework.context.annotation.Import;
  * 版本:[v1.0]   <br/>
  */
 @Configuration
-//@EnableConfigurationProperties(CMQProducerProperties.class)
 @Import({ThreadAsyncConfig.class,CMQProducerProperties.class})
 public class AutoConfigurationLogBack {
 
@@ -29,6 +30,11 @@ public class AutoConfigurationLogBack {
         return new AopAspects();
     }
 
-
+    @Bean
+    public BaseLoggerAsync basLoggerAsync(){
+        //启动时调用该方法，将ip存入内存，后续将不再耗费时间
+        BaseUtil.getLocalIp();
+        return new BaseLoggerAsync();
+    }
 
 }

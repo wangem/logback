@@ -1,7 +1,6 @@
 package com.answern.logback.service;
 
-import com.answern.logback.config.aop.ClassLog;
-import com.answern.logback.config.aop.MethodLog;
+import com.answern.logback.config.annotation.PrintLog;
 import org.springframework.stereotype.Service;
 
 
@@ -15,9 +14,10 @@ import org.springframework.stereotype.Service;
  */
 @Service
 //@ClassLog(sysName = "thisClassname",logInfo = "ok")
+@PrintLog
 public class ClassService {
 
-    @MethodLog
+
     public String indexService(){
         return "is ok";
     }

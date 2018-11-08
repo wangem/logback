@@ -3,12 +3,11 @@ package com.answern.logback.config.aop;
 import com.answern.logback.base.BaseLogger;
 import com.answern.logback.base.BaseUtil;
 import com.answern.logback.config.CMQProducerProperties;
-import org.apache.commons.lang3.ObjectUtils;
+import com.answern.logback.config.annotation.ControllerLog;
+import com.answern.logback.config.annotation.PrintLog;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 
@@ -42,7 +41,7 @@ public class AopMethodServer {
      * @throws InterruptedException
      */
     @Async("asyncServiceExecutors")
-    void aopMethodBefore(String id,String cid, ProceedingJoinPoint point, MethodLog test) {
+    void aopMethodBefore(String id,String cid, ProceedingJoinPoint point, PrintLog test) {
         LinkedHashMap map = new LinkedHashMap();
         map.put("Process Id",id);
         map.put("cid",cid);
@@ -70,11 +69,11 @@ public class AopMethodServer {
      * @param test
      */
     @Async("asyncServiceExecutors")
-    void aopMethodAfter(String id,String cid, ProceedingJoinPoint point, MethodLog test) {
+    void aopMethodAfter(String id,String cid, ProceedingJoinPoint point, PrintLog test) {
         LinkedHashMap map = new LinkedHashMap();
         map.put("Process Id",id);
         map.put("cid",cid);
-        map.put("systemName",BaseUtil.getSystemName());
+        map.put("systemName",BaseUtil.getLocalIp());
         map.put("ip",BaseUtil.getLocalIp());
         map.put("time Date",BaseUtil.getFormatTime());
         map.put("time",System.currentTimeMillis());
@@ -173,7 +172,7 @@ public class AopMethodServer {
      * @param test
      */
     @Async("asyncServiceExecutors")
-    void aopMethodAfterThrowing(String id, JoinPoint point, MethodLog test, Exception e) {
+    void aopMethodAfterThrowing(String id, JoinPoint point, PrintLog test, Exception e) {
         LinkedHashMap map = new LinkedHashMap();
         map.put("Process Id",id);
         map.put("systemName",BaseUtil.getSystemName());
@@ -191,7 +190,7 @@ public class AopMethodServer {
     /**
      * 获取方法的中文备注____用于记录用户的操作日志描述
      */
-    private MethodLog getMethodRemark(ProceedingJoinPoint joinPoint) {
+    private PrintLog getMethodRemark(ProceedingJoinPoint joinPoint) {
         try {
             //返回目标对象
             Object target = joinPoint.getTarget();
@@ -208,7 +207,7 @@ public class AopMethodServer {
                 if (m.getName().equals(methodName)) {
                     Class[] tmpCs = m.getParameterTypes();
                     if (tmpCs.length == arguments.length) {
-                        MethodLog methodCache = m.getAnnotation(MethodLog.class);
+                        PrintLog methodCache = m.getAnnotation(PrintLog.class);
                         if (methodCache != null) {
                             return methodCache;
                         }

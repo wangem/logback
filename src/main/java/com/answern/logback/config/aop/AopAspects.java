@@ -1,6 +1,7 @@
 package com.answern.logback.config.aop;
 
-import com.answern.logback.config.CMQProducerProperties;
+import com.answern.logback.config.annotation.ControllerLog;
+import com.answern.logback.config.annotation.PrintLog;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -26,33 +27,32 @@ import java.util.UUID;
  */
 
 @Aspect
-@Order(0) // 控制多个Aspect的执行顺序，越小越先执行
+@Order(50) // 控制多个Aspect的执行顺序，越小越先执行
 public class AopAspects {
 
     private Logger logger = LoggerFactory.getLogger(AopAspects.class);
     private String id = null;
+
     @Autowired
     AopMethodServer aopMethodServer;
 
-    @Autowired
-    private CMQProducerProperties cmqProducerProperties;
-
     @Around("@annotation(test)")
-    public Object aroundMethodLog(ProceedingJoinPoint point,MethodLog test) throws Throwable {
+    public Object aroundMethodLog(ProceedingJoinPoint point, PrintLog test) throws Throwable {
 
         if (!StringUtils.isNotEmpty(id)){
             id = UUID.randomUUID().toString();
         }
-        System.out.print(cmqProducerProperties.getQueue_endpoint());
-
         String cid =UUID.randomUUID().toString();
-        //System.out.println("After MethodLog");
         // 调用前日志处理
         aopMethodServer.aopMethodBefore(id,cid,point, test);
         Object aThis =point.proceed();
 //         调用后日志处理
         aopMethodServer.aopMethodAfter(id,cid, point, test);
         return aThis;
+    }
+    @Around(value="@within(test)")
+    public Object aroundMethodLogC(ProceedingJoinPoint joinPoint, PrintLog test) throws Throwable  {
+        return aroundMethodLog( joinPoint,  test);
     }
 
     @Around("@annotation(test)")
@@ -66,9 +66,12 @@ public class AopAspects {
         aopMethodServer.aopControllerAfter(id,  test);
         return aThis;
     }
-
+    @Around(value="@within(test)")
+    public Object aroundControllerLogC(ProceedingJoinPoint joinPoint, ControllerLog test) throws Throwable  {
+       return aroundControllerLog( joinPoint,  test);
+    }
     @AfterThrowing(value = "@annotation(test)", throwing = "e")
-    public void afterThrowingMethodLog(JoinPoint joinPoint, MethodLog test, Exception e) {
+    public void afterThrowingMethodLog(JoinPoint joinPoint, PrintLog test, Exception e) {
         aopMethodServer.aopMethodAfterThrowing(id, joinPoint, test, e);
     }
 
@@ -81,12 +84,12 @@ public class AopAspects {
 
 //    private String id;
 //    @Before("@annotation(test)")
-//    public void Before(JoinPoint point, MethodLog test) throws Throwable {
+//    public void Before(JoinPoint point, PrintLog test) throws Throwable {
 //          id = UUID.randomUUID().toString();
 //        aopMethodServer.aopMethodBefore1(id,point,test);
 //    }
 //    @After("@annotation(test)")
-//    public void After(JoinPoint point, MethodLog test) throws Throwable {
+//    public void After(JoinPoint point, PrintLog test) throws Throwable {
 //
 //        aopMethodServer.aopMethodAfter1(id,point,test);
 //    }
@@ -120,6 +123,4 @@ public class AopAspects {
         return method;
 
     }
-
-
 }
