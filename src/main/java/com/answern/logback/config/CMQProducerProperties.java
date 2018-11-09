@@ -14,7 +14,7 @@ public class CMQProducerProperties {
     /**
      * cmq 访问url
      */
-    private String  queue_endpoint = "http://cmq-queue-bj.api.qcloud.com";
+    private String  queue_endpoint = "http://cmq-queue-bj.api.qcloud.com11";
     /**
      * cmq secret_id"
      */

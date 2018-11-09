@@ -109,9 +109,7 @@ public class BaseLogger {
             logger.info(info.toString());
         }
         //将日志Message发送到CMQ
-
-        new CMQServer(cmqProducerProperties).sendMessageQueue(info.toString());
-
+       // new CMQServer(cmqProducerProperties).sendMessageQueue(info.toString());
     }
 
 }
