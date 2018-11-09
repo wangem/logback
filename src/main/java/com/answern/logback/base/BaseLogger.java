@@ -1,7 +1,6 @@
 package com.answern.logback.base;
 
 import com.answern.logback.config.CMQProducerProperties;
-import com.answern.logback.server.CMQServer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

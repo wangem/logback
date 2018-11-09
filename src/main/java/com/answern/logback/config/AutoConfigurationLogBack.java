@@ -4,6 +4,7 @@ import com.answern.logback.base.BaseLoggerAsync;
 import com.answern.logback.base.BaseUtil;
 import com.answern.logback.config.aop.AopAspects;
 import com.answern.logback.config.aop.AopMethodServer;
+import com.answern.logback.server.CMQServer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -35,6 +36,10 @@ public class AutoConfigurationLogBack {
         //启动时调用该方法，将ip存入内存，后续将不再耗费时间
         BaseUtil.getLocalIp();
         return new BaseLoggerAsync();
+    }
+    @Bean
+    public  CMQServer cmqServer(){
+        return new CMQServer();
     }
 
 }
