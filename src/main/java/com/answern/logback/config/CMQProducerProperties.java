@@ -5,7 +5,8 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
 /**
- *
+ * @author wem
+ * CMQ 消息发送配置
  */
 @Data
 @Configuration
@@ -14,7 +15,7 @@ public class CMQProducerProperties {
     /**
      * cmq 访问url
      */
-    private String  queue_endpoint = "http://cmq-queue-bj.api.qcloud.com11";
+    private String  queue_endpoint = "http://cmq-queue-bj.api.qcloud.com";
     /**
      * cmq secret_id"
      */
