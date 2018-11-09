@@ -5,6 +5,8 @@ import com.answern.logback.base.BaseLogger;
 import com.answern.logback.config.annotation.ControllerLog;
 import com.answern.logback.config.annotation.PrintLog;
 import com.answern.logback.service.ClassService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,6 +26,7 @@ import java.util.LinkedHashMap;
 @RequestMapping("/classcontroller")
 @ControllerLog
 public class ClassController {
+    private Logger logger = LoggerFactory.getLogger(ClassController.class);
     @Autowired
     ClassService classService;
     @Autowired

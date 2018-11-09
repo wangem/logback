@@ -1,11 +1,16 @@
 package com.answern.logback.base;
 
 import com.answern.logback.config.CMQProducerProperties;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 public class BaseLoggerAsync {
+
+    @Autowired
+    private CMQProducerProperties cmqProducerProperties;
 
     /**
      * 传入打印的日志Message，按顺序打印
@@ -15,7 +20,16 @@ public class BaseLoggerAsync {
      */
     @Async("asyncServiceExecutors")
     public  void loggerRecord(LinkedHashMap map){
-        CMQProducerProperties cmqProducerProperties = new CMQProducerProperties();
+        new BaseLoggerAsync().loggerRecordAsync( cmqProducerProperties, map);
+    }
+    /**
+     * 传入打印的日志Message，按顺序打印
+     * @param logInfo 传入要打印的日志Message
+     */
+    @Async("asyncServiceExecutors")
+    public  void loggerRecord(String logInfo){
+        LinkedHashMap map = new LinkedHashMap();
+        map.put("logInfo",logInfo);
         new BaseLoggerAsync().loggerRecordAsync( cmqProducerProperties, map);
     }
     /**
@@ -27,7 +41,17 @@ public class BaseLoggerAsync {
      */
     @Async("asyncServiceExecutors")
     public  void loggerRecord(LinkedHashMap map,Boolean isPrint){
-        CMQProducerProperties cmqProducerProperties = new CMQProducerProperties();
+        new BaseLoggerAsync().loggerRecordAsync( cmqProducerProperties, map,isPrint);
+    }
+    /**
+     * 传入打印的日志Message，按顺序打印
+     * @param logInfo 传入要打印的日志Message
+     * @param isPrint 是否本系统打印
+     */
+    @Async("asyncServiceExecutors")
+    public  void loggerRecord(String logInfo,Boolean isPrint){
+        LinkedHashMap map = new LinkedHashMap();
+        map.put("logInfo",logInfo);
         new BaseLoggerAsync().loggerRecordAsync( cmqProducerProperties, map,isPrint);
     }
     /**
@@ -55,7 +79,6 @@ public class BaseLoggerAsync {
 
 
     void loggerRecordAsync(CMQProducerProperties cmqProducerProperties, LinkedHashMap map){
-
         BaseLogger.loggerRecord( cmqProducerProperties, map);
     }
 

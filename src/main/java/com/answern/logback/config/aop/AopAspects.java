@@ -42,12 +42,18 @@ public class AopAspects {
         if (!StringUtils.isNotEmpty(id)){
             id = UUID.randomUUID().toString();
         }
+        String privatId=id;
         String cid =UUID.randomUUID().toString();
         // 调用前日志处理
         aopMethodServer.aopMethodBefore(id,cid,point, test);
         Object aThis =point.proceed();
 //         调用后日志处理
-        aopMethodServer.aopMethodAfter(id,cid, point, test);
+        if(privatId.equals(id)){
+            aopMethodServer.aopMethodAfter(id,cid, point, test);
+        }else{
+            aopMethodServer.aopMethodAfter("errorId"+id,cid, point, test);
+        }
+
         return aThis;
     }
     @Around(value="@within(test)")
@@ -59,11 +65,16 @@ public class AopAspects {
     public Object aroundControllerLog(ProceedingJoinPoint point, ControllerLog test) throws Throwable {
         HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest();
         id = UUID.randomUUID().toString();
+        String privatId = id;
         // 调用前日志处理
         aopMethodServer.aopControllerBefore(id, point, test, request);
         Object aThis = point.proceed();
         // 调用后日志处理
-        aopMethodServer.aopControllerAfter(id,  test);
+        if(privatId.equals(id)){
+            aopMethodServer.aopControllerAfter(id,  test);
+        }else {
+            aopMethodServer.aopControllerAfter("errorId"+id,  test);
+        }
         return aThis;
     }
     @Around(value="@within(test)")

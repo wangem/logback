@@ -31,7 +31,6 @@ public class AopMethodServer {
 
     @Autowired
     private CMQProducerProperties cmqProducerProperties;
-
     /**
      * Method执行方法之前调用
      *
