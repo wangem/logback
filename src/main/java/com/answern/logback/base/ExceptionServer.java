@@ -1,7 +1,6 @@
 package com.answern.logback.base;
 
 import com.alibaba.fastjson.JSON;
-import com.sun.java.browser.plugin2.liveconnect.v1.Result;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -33,8 +32,8 @@ public class ExceptionServer {
                 BaseUtil.getFormatTime() , ex.getMessage());
         this.logger.error(ex.getMessage());
         String formatDate = BaseUtil.getFormatTime();
-        Result result = new Result("000000" ,true);
-        return JSON.toJSONString(result);
+        ;
+        return JSON.toJSONString("ERROR CODE: 000000");
     }
 
 }

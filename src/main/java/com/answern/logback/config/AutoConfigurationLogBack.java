@@ -2,12 +2,14 @@ package com.answern.logback.config;
 
 import com.answern.logback.base.BaseLoggerAsync;
 import com.answern.logback.base.BaseUtil;
+import com.answern.logback.base.ExceptionServer;
 import com.answern.logback.config.aop.AopAspects;
 import com.answern.logback.config.aop.AopMethodServer;
 import com.answern.logback.server.CMQServer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
  * 需求名称:
@@ -18,7 +20,7 @@ import org.springframework.context.annotation.Import;
  * 版本:[v1.0]   <br/>
  */
 @Configuration
-@Import({ThreadAsyncConfig.class,CMQProducerProperties.class})
+@Import({ThreadAsyncConfig.class,CMQProducerProperties.class, ExceptionServer.class})
 public class AutoConfigurationLogBack {
 
     @Bean
