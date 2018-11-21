@@ -5,3 +5,6 @@
         方法的日志打印注解
 ## BaseLogger.loggerRecord()
         业务层面可以直接调用该方法打印日志
+        
+## BaseLoggerAsync.loggerRecord()
+        业务层面异步可以直接调用该方法打印日志
