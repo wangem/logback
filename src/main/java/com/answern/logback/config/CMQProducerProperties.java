@@ -12,18 +12,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ConfigurationProperties(prefix = "answern.cmq")
 public class CMQProducerProperties {
-    /**
-     * cmq 访问url
-     */
-    private String  queue_endpoint = "http://cmq-queue-bj.api.qcloud.com";
-    /**
-     * cmq secret_id"
-     */
-    private String  secret_id      = "AKIDbGrIbjMqpT5YIsSdnsmU0Kf8arwtqbP2";
-    /**
-     * cmq secret_key"
-     */
-    private String  secret_key     = "qZL0f8QWZRDxZ2MYZP6g5QadVKWwSp14";
+
     /**
      * cmq queue_name"
      */
